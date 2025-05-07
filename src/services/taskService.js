@@ -8,7 +8,7 @@ class TaskService {
    * @returns {Promise<Task>}
    */
   async addTask(dto) {
-    // Validación de negocio: título no vacío
+    // Validamos que el campo title no sea vacio
     if (!dto.title || dto.title.trim() === "") {
       throw createError(400, "El campo 'title' es obligatorio");
     }
@@ -45,12 +45,13 @@ class TaskService {
    */
   async changeStatus(id, statusDto) {
     const validStatuses = ["pending", "in-progress", "completed"];
+    // Validamos que el campo status sea uno de los permitidos
     if (!statusDto.status || !validStatuses.includes(statusDto.status)) {
-      throw createError(400, `Status inválido, debe ser uno de: ${validStatuses.join(", ")}`);
+      throw createError(400, `Status invalido, debe ser uno de: ${validStatuses.join(", ")}`);
     }
     const task = await this.getTask(id);
     await taskRepo.update(id, { status: statusDto.status });
-    // Refrescar datos
+    // Buscamos la tarea actualizada y la regresamos
     return await taskRepo.findById(id);
   }
 

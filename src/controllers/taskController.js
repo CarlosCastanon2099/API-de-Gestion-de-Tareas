@@ -41,7 +41,7 @@ class TaskController {
 
   /**
    * PUT /tasks/:id
-   * Sólo actualiza el campo status
+   * Solo actualiza el campo status
    */
   async updateTask(req, res, next) {
     try {
