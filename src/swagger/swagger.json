@@ -1,0 +1,181 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "To-Do List API",
+      "version": "1.0.0",
+      "description": "API para gestion de tareas"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000",
+        "description": "Servidor local"
+      }
+    ],
+    "paths": {
+      "/tasks": {
+        "post": {
+          "summary": "Crear una nueva tarea",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TaskInput" }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Tarea creada",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Task" }
+                }
+              }
+            },
+            "400": { "$ref": "#/components/responses/BadRequest" },
+            "500": { "$ref": "#/components/responses/InternalError" }
+          }
+        },
+        "get": {
+          "summary": "Obtener lista de tareas",
+          "responses": {
+            "200": {
+              "description": "Lista de tareas",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": { "$ref": "#/components/schemas/Task" }
+                  }
+                }
+              }
+            },
+            "500": { "$ref": "#/components/responses/InternalError" }
+          }
+        }
+      },
+      "/tasks/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "get": {
+          "summary": "Obtener detalle de una tarea",
+          "responses": {
+            "200": {
+              "description": "Tarea encontrada",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Task" }
+                }
+              }
+            },
+            "404": { "$ref": "#/components/responses/NotFound" },
+            "500": { "$ref": "#/components/responses/InternalError" }
+          }
+        },
+        "put": {
+          "summary": "Actualizar estado de una tarea",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/StatusUpdate" }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Tarea actualizada",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Task" }
+                }
+              }
+            },
+            "400": { "$ref": "#/components/responses/BadRequest" },
+            "404": { "$ref": "#/components/responses/NotFound" },
+            "500": { "$ref": "#/components/responses/InternalError" }
+          }
+        },
+        "delete": {
+          "summary": "Eliminar una tarea",
+          "responses": {
+            "204": {
+              "description": "Tarea eliminada sin contenido"
+            },
+            "404": { "$ref": "#/components/responses/NotFound" },
+            "500": { "$ref": "#/components/responses/InternalError" }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Task": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string", "format": "uuid" },
+            "title": { "type": "string" },
+            "description": { "type": "string", "nullable": true },
+            "dueDate": { "type": "string", "format": "date-time", "nullable": true },
+            "status": { "type": "string", "enum": ["pending", "in-progress", "completed"] },
+            "createdAt": { "type": "string", "format": "date-time" },
+            "updatedAt": { "type": "string", "format": "date-time" }
+          },
+          "required": ["id", "title", "status", "createdAt", "updatedAt"]
+        },
+        "TaskInput": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" },
+            "description": { "type": "string" },
+            "dueDate": { "type": "string", "format": "date-time" },
+            "status": { "type": "string", "enum": ["pending", "in-progress", "completed"] }
+          },
+          "required": ["title", "status"]
+        },
+        "StatusUpdate": {
+          "type": "object",
+          "properties": {
+            "status": { "type": "string", "enum": ["pending", "in-progress", "completed"] }
+          },
+          "required": ["status"]
+        }
+      },
+      "responses": {
+        "BadRequest": {
+          "description": "Solicitud incorrecta",
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
+          }
+        },
+        "NotFound": {
+          "description": "Recurso no encontrado",
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
+          }
+        },
+        "InternalError": {
+          "description": "Error interno del servidor",
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
+          }
+        }
+      },
+      "schemas": {
+        "Error": {
+          "type": "object",
+          "properties": {
+            "message": { "type": "string" }
+          },
+          "required": ["message"]
+        }
+      }
+    }
+  }
+  
