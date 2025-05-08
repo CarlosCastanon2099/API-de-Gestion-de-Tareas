@@ -70,5 +70,28 @@ jest.mock("../../repositories/taskRepository.js", () => ({
         .rejects.toMatchObject({ status: 404 });
     });
   });
+
+  // Test listTasks
+  describe("TaskService.listTasks", () => {
+    beforeEach(() => jest.clearAllMocks());
   
+    test("devuelve un array de tareas", async () => {
+      const fakeTasks = [
+        { id: "1", title: "T1", status: "pending" },
+        { id: "2", title: "T2", status: "completed" }
+      ];
+      taskRepo.findAll.mockResolvedValue(fakeTasks);
   
+      const result = await taskService.listTasks();
+      expect(taskRepo.findAll).toHaveBeenCalled();
+      expect(result).toEqual(fakeTasks);
+    });
+  
+    test("devuelve array vacio si no hay tareas", async () => {
+      taskRepo.findAll.mockResolvedValue([]);
+  
+      const result = await taskService.listTasks();
+      expect(taskRepo.findAll).toHaveBeenCalled();
+      expect(result).toEqual([]);
+    });
+  });
