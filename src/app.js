@@ -18,7 +18,7 @@ app.use(express.json());
 // Rutas de la API
 app.use(taskRoutes);
 
-// Documentación Swagger
+// Documentacion Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Middleware para 404
@@ -32,7 +32,7 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message: err.message });
 });
 
-// Inicialización de servidor y BD
+// Inicializacion de servidor y BD
 const init = async () => {
   await testConnection();
   await sequelize.sync();
