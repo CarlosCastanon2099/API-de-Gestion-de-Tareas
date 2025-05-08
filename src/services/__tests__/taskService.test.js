@@ -11,6 +11,10 @@ jest.mock("../../repositories/taskRepository.js", () => ({
   import taskRepo from "../../repositories/taskRepository.js";
   import createError from "http-errors";
   
+  // Tests de TaskService
+  // ---------------------------------------------------
+
+  // Test addTask
   describe("TaskService.addTask", () => {
     beforeEach(() => jest.clearAllMocks());
   
@@ -29,7 +33,9 @@ jest.mock("../../repositories/taskRepository.js", () => ({
         .rejects.toMatchObject({ status: 400 });
     });
   });
-  
+
+
+  // Test getTask
   describe("TaskService.getTask", () => {
     beforeEach(() => jest.clearAllMocks());
   
@@ -47,4 +53,22 @@ jest.mock("../../repositories/taskRepository.js", () => ({
         .rejects.toMatchObject({ status: 404 });
     });
   });
+
+  // Test removeTask
+  describe("TaskService.removeTask", () => {
+    beforeEach(() => jest.clearAllMocks());
+  
+    test("no arroja error si delete retorna >0", async () => {
+      taskRepo.delete.mockResolvedValue(1);
+      await expect(taskService.removeTask("uuid")).resolves.toBeUndefined();
+      expect(taskRepo.delete).toHaveBeenCalledWith("uuid");
+    });
+  
+    test("lanza NotFound si delete retorna 0", async () => {
+      taskRepo.delete.mockResolvedValue(0);
+      await expect(taskService.removeTask("nope"))
+        .rejects.toMatchObject({ status: 404 });
+    });
+  });
+  
   
