@@ -10,7 +10,8 @@ jest.mock("../../repositories/taskRepository.js", () => ({
   import taskService from "../taskService.js";
   import taskRepo from "../../repositories/taskRepository.js";
   import createError from "http-errors";
-  
+
+  // ---------------------------------------------------
   // Tests de TaskService
   // ---------------------------------------------------
 
@@ -95,3 +96,39 @@ jest.mock("../../repositories/taskRepository.js", () => ({
       expect(result).toEqual([]);
     });
   });
+
+  // Test changeStatus
+  describe("TaskService.changeStatus", () => {
+    beforeEach(() => jest.clearAllMocks());
+  
+    test("actualiza y devuelve la tarea si status es valido", async () => {
+      const id = "uuid";
+      const statusDto = { status: "completed" };
+      const existingTask = { id, title: "T1", status: "pending" };
+      const updatedTask = { id, title: "T1", status: "completed" };
+  
+      taskRepo.findById.mockResolvedValueOnce(existingTask);
+      taskRepo.update.mockResolvedValue(1);
+      taskRepo.findById.mockResolvedValueOnce(updatedTask);
+  
+      const result = await taskService.changeStatus(id, statusDto);
+      expect(taskRepo.findById).toHaveBeenCalledWith(id);
+      expect(taskRepo.update).toHaveBeenCalledWith(id, { status: statusDto.status });
+      expect(result).toEqual(updatedTask);
+    });
+  
+    test("lanza BadRequest si status es invalido", async () => {
+      await expect(taskService.changeStatus("uuid", { status: "invalid" }))
+        .rejects.toMatchObject({ status: 400 });
+    });
+  
+    test("lanza NotFound si la tarea no existe", async () => {
+      taskRepo.findById.mockResolvedValue(null);
+      await expect(taskService.changeStatus("nope", { status: "pending" }))
+        .rejects.toMatchObject({ status: 404 });
+    });
+  });
+  
+  // ---------------------------------------------------
+  // ---------------------------------------------------
+  // ---------------------------------------------------
