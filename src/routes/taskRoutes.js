@@ -5,7 +5,7 @@ import { validateCreate, validateUpdate } from "../validators/taskValidator.js";
 const router = express.Router();
 
 // Crea la tarea
-outer.post("/tasks", validateCreate, taskController.createTask.bind(taskController));
+router.post("/tasks", validateCreate, taskController.createTask.bind(taskController));
 // Lista las tareas
 router.get("/tasks", taskController.getTasks.bind(taskController));
 // Obtenemos detalles de la tarea
