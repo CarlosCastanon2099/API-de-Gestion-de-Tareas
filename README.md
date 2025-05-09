@@ -79,6 +79,12 @@ docker run --rm -it todo-api sh -c "npm install --include=dev && npm run test"
 docker run -d --name todo-api-container -p 3000:3000 todo-api
 ```
 
+Para consultar la documentacion de Swagger ir a;
+
+```Python
+http://localhost:3000/api-docs
+```
+
 Una vez que tenemos levantado el contenedor de Docker, ahora, podemos probar la API.
 
 Para registrar una tarea, deberemos ejecutar;
