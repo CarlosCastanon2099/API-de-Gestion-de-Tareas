@@ -13,6 +13,9 @@ COPY package.json package-lock.json* ./
 # Instala solo dependencias de produccion
 RUN npm install
 
+# Instala los paquetes para documentacion
+RUN npm install swagger-jsdoc swagger-ui-express
+
 # Copia el resto del codigo fuente
 COPY . .
 

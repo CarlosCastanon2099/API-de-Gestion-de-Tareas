@@ -6,6 +6,7 @@ import sequelize, { testConnection } from "./config/db.js";
 import taskRoutes from "./routes/taskRoutes.js";
 import createError from "http-errors";
 
+
 // Carga variables de entorno
 dotenv.config();
 
@@ -38,6 +39,7 @@ const init = async () => {
   await sequelize.sync();
   app.listen(PORT, () => {
     console.log(`Servidor escuchando en puerto ${PORT}`);
+    console.log(`Documentacion Swagger en http://localhost:${PORT}/api-docs`);
   });
 };
 
