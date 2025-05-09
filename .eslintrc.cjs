@@ -17,10 +17,9 @@ rules: {
   'no-unused-vars': ['warn', { argsIgnorePattern: '^', varsIgnorePattern: '^' }]
 },
 overrides: [{
-  files: ['/tests//*.js'],
-  env: {
-    jest: true
-  },
+  files: ['**/__tests__/**/*.js'],
+  env: { jest: true },
   rules: {
-  'no-undef': 'off'
-}}]};
+    'no-undef': 'off',
+    'no-unused-vars': 'off'}}]
+};
