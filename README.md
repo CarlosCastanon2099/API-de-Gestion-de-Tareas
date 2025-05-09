@@ -179,7 +179,7 @@ Write-Host "Tarea $taskId eliminada"
 [issues-shield]: https://img.shields.io/github/issues/CarlosCastanon2099/API-de-Gestion-de-Tareas.svg?style=for-the-badge
 [issues-url]: https://github.com/CarlosCastanon2099/API-de-Gestion-de-Tareas/issues
 [license-shield]: https://img.shields.io/github/license/CarlosCastanon2099/API-de-Gestion-de-Tareas.svg?style=for-the-badge
-[license-url]: https://github.com/CarlosCastanon2099/API-de-Gestion-de-Tareas/blob/master/LICENSE.txt
+[license-url]: https://github.com/CarlosCastanon2099/API-de-Gestion-de-Tareas/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
 [product-screenshot]: images/screenshot.png
