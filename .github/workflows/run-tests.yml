@@ -13,11 +13,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Debug installed dependencies
-        run: |
-          docker run --rm todo-api:test \
-            sh -c "ls -la node_modules && ls -la node_modules/.bin"
-
       - name: Build Docker image (with devDeps)
         run: |
           docker build \
