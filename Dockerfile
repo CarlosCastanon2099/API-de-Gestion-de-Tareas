@@ -1,4 +1,4 @@
-ARG INSTALL_DEV=false
+ARG INSTALL_DEV=true
 
 # Usa una imagen ligera de Node.js
 FROM node:18-alpine
