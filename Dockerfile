@@ -13,13 +13,14 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json* ./
 
 # Github installs
-RUN if [ "${INSTALL_DEV}" = "true" ]; then npm install; else npm install --omit=dev; fi
-
-# Instala solo dependencias de produccion
-RUN npm install
+RUN if [ "$INSTALL_DEV" = "true" ]; then \
+      npm install; \
+    else \
+      npm install --omit=dev; \
+    fi
 
 # Instala los paquetes para documentacion
-RUN npm install swagger-jsdoc swagger-ui-express
+# RUN npm install swagger-jsdoc swagger-ui-express
 
 # Copia el resto del codigo fuente
 COPY . .

@@ -13,6 +13,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      - name: Debug installed dependencies
+        run: |
+          docker run --rm todo-api:test \
+            sh -c "ls -la node_modules && ls -la node_modules/.bin"
+
       - name: Build Docker image (with devDeps)
         run: |
           docker build \
@@ -23,4 +28,4 @@ jobs:
       - name: Run unit tests inside container
         run: |
           docker run --rm todo-api:test \
-            sh -c "npm test -- --coverage"
+            sh -c "./node_modules/.bin/jest --coverage"
