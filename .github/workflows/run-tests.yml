@@ -2,9 +2,9 @@ name: Dockerized Unit Tests
 
 on:
   push:
-    branches: [ documentacion ]
+    branches: [ main ]
   pull_request:
-    branches: [ documentacion ]
+    branches: [ main ]
 
 jobs:
   docker-tests:
