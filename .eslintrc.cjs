@@ -2,24 +2,32 @@ module.exports = {
   env: {
   node: true,
   es2021: true,
+  jest: true,
 },
 extends: [
-  'eslint:recommended'
+  'eslint:recommended',
+  'plugin:jest/recommended'
 ],
-parserOptions: {
-  ecmaVersion: 2021,
-  sourceType: 'module',
-ecmaFeatures: {
-  importMeta: true
-}},
+  plugins: ['jest'], 
+  parser: '@babel/eslint-parser', 
+  parserOptions: {
+    ecmaVersion: 2022, 
+    sourceType: 'module',
+    requireConfigFile: true, 
+    ecmaFeatures: {
+      jsx: false, 
+      importMeta: true
+    }
+  },
 rules: {
   'no-console': 'off',
-  'no-unused-vars': ['warn', { argsIgnorePattern: '^', varsIgnorePattern: '^' }]
+  'no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }]
 },
 overrides: [{
-  files: ['**/__tests__/**/*.js'],
-  env: { jest: true },
-  rules: {
-    'no-undef': 'off',
-    'no-unused-vars': 'off'}}]
+    files: ['**/__tests__/**/*.js'],
+    rules: {
+      'jest/no-disabled-tests': 'error', 
+      'jest/no-focused-tests': 'error'
+    }
+  }]
 };
