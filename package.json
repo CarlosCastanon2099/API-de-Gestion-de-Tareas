@@ -16,6 +16,7 @@
     "license": "MIT",
     "dependencies": {
       "jest": "^29.0.0",
+      "@babel/preset-env": "^7.20.0",
       "express": "^4.18.2",
       "sequelize": "^6.31.1",
       "sqlite3": "^5.1.6",
@@ -27,8 +28,7 @@
     "devDependencies": {
       "nodemon": "^3.0.1",
       "eslint": "^8.48.0",
-      "swagger-cli": "^4.0.4",
-      "@babel/preset-env": "^7.20.0"
+      "swagger-cli": "^4.0.4"
     }
   }
   
