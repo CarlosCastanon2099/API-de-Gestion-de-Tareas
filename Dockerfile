@@ -1,3 +1,5 @@
+ARG INSTALL_DEV=false
+
 # Usa una imagen ligera de Node.js
 FROM node:18-alpine
 
@@ -9,6 +11,9 @@ WORKDIR /usr/src/app
 
 # Copia package.json y package-lock.json al contenedor
 COPY package.json package-lock.json* ./
+
+# Github installs
+RUN if [ "${INSTALL_DEV}" = "true" ]; then npm install; else npm install --omit=dev; fi
 
 # Instala solo dependencias de produccion
 RUN npm install
