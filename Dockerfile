@@ -12,6 +12,9 @@ WORKDIR /usr/src/app
 # Copia package.json y package-lock.json al contenedor
 COPY package.json package-lock.json* ./
 
+# Instalamos "jest": "^29.0.0"
+RUN npm install --omit=dev jest@^29.0.0
+
 # Github installs
 RUN if [ "$INSTALL_DEV" = "true" ]; then \
       npm install; \
